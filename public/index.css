@@ -115,6 +115,18 @@
     border-color: transparent;
 }
 
+.header__search-input {
+    background-image: url('imgs/search-black.svg');
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    border: none;
+    background-position: 7px 7px;
+    border-radius: 20px;
+    padding: 10px;
+    padding-left: 40px;
+    width: 340px;
+}
+
 .side-menu {
     grid-area: aside;
     background-color: black; 
@@ -202,17 +214,23 @@
     padding: 25px;
 }
 
-.playlists-box__container {
+.playlists-box__container { /* показываются только те плейлисты, что влезают */
     display: grid;
     overflow: hidden;
     position: relative;
-    column-gap: 10px;
+    column-gap: 15px;
     padding-top: 50px;
     margin-bottom: 30px;
     grid-template-rows: 1fr;
     grid-auto-rows: 0;
     row-gap: 0px;
     grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+}
+
+.playlists-box__container_all-visible { /* все плейлисты показываются */
+    overflow: visible;
+    row-gap: 15px;
+    grid-auto-rows: auto;
 }
 
 .playlists-box__title {
@@ -224,6 +242,19 @@
     position: absolute;
     right: 0;
     top: 5px;
+}
+
+.playlists-box__playlist-link {
+    color:white;
+    text-decoration: none;
+} 
+
+.playlists-box__playlist-link:hover {
+    text-decoration: underline;
+} 
+
+.playlists-box__playlist-link_hidden {
+    display: none;
 }
 
 .playlist {
