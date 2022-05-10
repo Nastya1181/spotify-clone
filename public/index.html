@@ -10,32 +10,23 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>Spotify</title>
+    <script src="./script.js" defer type="module"></script>
   </head>
   <body class="spotify-app">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <header class="header spotify-app__header">
       <div class="header__btns">
-        <button class="header__btn header__btn_round"><svg class="header__svg"><path d="M15.957 2.793a1 1 0 010 1.414L8.164 12l7.793 7.793a1 1 0 11-1.414 1.414L5.336 12l9.207-9.207a1 1 0 011.414 0z"></path></svg></button>
-        <button class="header__btn header__btn_round"><svg class="header__svg"><path d="M8.043 2.793a1 1 0 000 1.414L15.836 12l-7.793 7.793a1 1 0 101.414 1.414L18.664 12 9.457 2.793a1 1 0 00-1.414 0z"></path></svg></button>
+        <button class="header__btn header__btn_round" id="backButton"><svg class="header__svg"><path d="M15.957 2.793a1 1 0 010 1.414L8.164 12l7.793 7.793a1 1 0 11-1.414 1.414L5.336 12l9.207-9.207a1 1 0 011.414 0z"></path></svg></button>
+        <button class="header__btn header__btn_round" id="goButton"><svg class="header__svg"><path d="M8.043 2.793a1 1 0 000 1.414L15.836 12l-7.793 7.793a1 1 0 101.414 1.414L18.664 12 9.457 2.793a1 1 0 00-1.414 0z"></path></svg></button>
       </div>
       <div class="header__btns">
-       <!--  <button class="header__btn header__btn_soft-angles header__btn_has-border">Сменить тариф</button> !!!заменила на поиск!!!-->
         <input class="header__search-input" type="search" placeholder="Исполнитель, трек или подкаст" name="search">   
-        <button class="header__btn header__btn_soft-angles">
+        <button class="header__btn header__btn_soft-angles" id="logButton">
           <svg class="header__svg header__svg-account"  viewBox="0 0 18 20"><path d="M15.216 13.717L12 11.869C11.823 11.768 11.772 11.607 11.757 11.521C11.742 11.435 11.737 11.267 11.869 11.111L13.18 9.57401C14.031 8.58001 14.5 7.31101 14.5 6.00001V5.50001C14.5 3.98501 13.866 2.52301 12.761 1.48601C11.64 0.435011 10.173 -0.0879888 8.636 0.0110112C5.756 0.198011 3.501 2.68401 3.501 5.67101V6.00001C3.501 7.31101 3.97 8.58001 4.82 9.57401L6.131 11.111C6.264 11.266 6.258 11.434 6.243 11.521C6.228 11.607 6.177 11.768 5.999 11.869L2.786 13.716C1.067 14.692 0 16.526 0 18.501V20H1V18.501C1 16.885 1.874 15.385 3.283 14.584L6.498 12.736C6.886 12.513 7.152 12.132 7.228 11.691C7.304 11.251 7.182 10.802 6.891 10.462L5.579 8.92501C4.883 8.11101 4.499 7.07201 4.499 6.00001V5.67101C4.499 3.21001 6.344 1.16201 8.699 1.00901C9.961 0.928011 11.159 1.35601 12.076 2.21501C12.994 3.07601 13.5 4.24301 13.5 5.50001V6.00001C13.5 7.07201 13.117 8.11101 12.42 8.92501L11.109 10.462C10.819 10.803 10.696 11.251 10.772 11.691C10.849 12.132 11.115 12.513 11.503 12.736L14.721 14.585C16.127 15.384 17.001 16.884 17.001 18.501V20H18.001V18.501C18 16.526 16.932 14.692 15.216 13.717Z"></path></svg>
-          <span class="header__user">Nastya</span>
-          <svg class="header__svg header__svg-triangle"  viewBox="0 -3 20 20"><path d="M14 6l-6 6-6-6h12z"></path></svg></button>
+          <span class="header__user"></span>
+          <!-- <svg class="header__svg header__svg-triangle"  viewBox="0 -3 20 20"><path d="M14 6l-6 6-6-6h12z"></path></svg> --></button>
       </div>
   </header>
   <aside class="side-menu spotify-app__side-menu ">
@@ -45,269 +36,62 @@
       <ul class="side-menu__list">
         <li class="side-menu__item">
           <a href="#" class="side-menu__link link link_white">
-            <svg class="side-menu__svg" width="24" height="24" viewBox="0 0 24 24" >
-              <path  d="M12.5 3.247a1 1 0 00-1 0L4 7.577V20h4.5v-6a1 1 0 011-1h5a1 1 0 011 1v6H20V7.577l-7.5-4.33zm-2-1.732a3 3 0 013 0l7.5 4.33a2 2 0 011 1.732V21a1 1 0 01-1 1h-6.5a1 1 0 01-1-1v-6h-3v6a1 1 0 01-1 1H3a1 1 0 01-1-1V7.577a2 2 0 011-1.732l7.5-4.33z" fill="#FFFFFF"></path>
-            </svg>
-            <div class="side-menu__link-text">Главная</div>
-          </a>
-        </li>
-       <!--  <li class="side-menu__item">
-          <a href="#" class="side-menu__link link">
             <svg class="side-menu__svg" width="24" height="24" viewBox="0 0 24 24">
-              <path d="M15.356 10.558c0 2.623-2.16 4.75-4.823 4.75-2.664 0-4.824-2.127-4.824-4.75s2.16-4.75 4.824-4.75c2.664 0 4.823 2.127 4.823 4.75z"></path>
-              <path d="M1.126 10.558c0-5.14 4.226-9.28 9.407-9.28 5.18 0 9.407 4.14 9.407 9.28a9.157 9.157 0 01-2.077 5.816l4.344 4.344a1 1 0 01-1.414 1.414l-4.353-4.353a9.454 9.454 0 01-5.907 2.058c-5.18 0-9.407-4.14-9.407-9.28zm9.407-7.28c-4.105 0-7.407 3.274-7.407 7.28s3.302 7.279 7.407 7.279 7.407-3.273 7.407-7.28c0-4.005-3.302-7.278-7.407-7.278z"></path>
+              <path fill="white" d="M15.356 10.558c0 2.623-2.16 4.75-4.823 4.75-2.664 0-4.824-2.127-4.824-4.75s2.16-4.75 4.824-4.75c2.664 0 4.823 2.127 4.823 4.75z"></path>
+              <path  fill="white" d="M1.126 10.558c0-5.14 4.226-9.28 9.407-9.28 5.18 0 9.407 4.14 9.407 9.28a9.157 9.157 0 01-2.077 5.816l4.344 4.344a1 1 0 01-1.414 1.414l-4.353-4.353a9.454 9.454 0 01-5.907 2.058c-5.18 0-9.407-4.14-9.407-9.28zm9.407-7.28c-4.105 0-7.407 3.274-7.407 7.28s3.302 7.279 7.407 7.279 7.407-3.273 7.407-7.28c0-4.005-3.302-7.278-7.407-7.278z"></path>
             </svg>
             <div class="side-menu__link-text">Поиск</div>
           </a>
-        </li> -->
-        <!-- <li class="side-menu__item">
-          <a href="#" class="side-menu__link link">
-            <svg class="side-menu__svg" width="24" height="24" viewBox="0 0 24 24">
-              <path d="M14.5 2.134a1 1 0 011 0l6 3.464a1 1 0 01.5.866V21a1 1 0 01-1 1h-6a1 1 0 01-1-1V3a1 1 0 01.5-.866zM16 4.732V20h4V7.041l-4-2.309zM3 22a1 1 0 01-1-1V3a1 1 0 012 0v18a1 1 0 01-1 1zm6 0a1 1 0 01-1-1V3a1 1 0 012 0v18a1 1 0 01-1 1z"></path>
-            </svg>
-            <div class="side-menu__link-text">Моя медиатека</div>
-          </a>
-        </li> -->
-      </ul>
-      <ul class="side-menu__list side-menu__list_no-padding">
-        <!-- <li class="side-menu__item">
-          <a href="#" class="side-menu__link link">
-            <svg class="side-menu__svg side-menu__svg-small" width="16" height="16" viewBox="0 0 16 16">
-              <path d="M15.25 8a.75.75 0 01-.75.75H8.75v5.75a.75.75 0 01-1.5 0V8.75H1.5a.75.75 0 010-1.5h5.75V1.5a.75.75 0 011.5 0v5.75h5.75a.75.75 0 01.75.75z"></path>
-            </svg>
-            <div class="side-menu__link-text">Создать плейлист</div>
-          </a>
-        </li> -->
-       <!--  <li class="side-menu__item">
-          <a href="#" class="side-menu__link link">
-            <svg class="side-menu__svg side-menu__svg-small" width="16" height="16" viewBox="0 0 16 16">
-              <path d="M15.724 4.22A4.313 4.313 0 0012.192.814a4.269 4.269 0 00-3.622 1.13.837.837 0 01-1.14 0 4.272 4.272 0 00-6.21 5.855l5.916 7.05a1.128 1.128 0 001.727 0l5.916-7.05a4.228 4.228 0 00.945-3.577z"></path>
-           </svg>
-            <div class="side-menu__link-text">Любимые треки</div>
-          </a>
         </li>
-        <li class="side-menu__item">
-          <a href="#" class="side-menu__link link">
-            <svg class="side-menu__svg side-menu__svg-small" width="16" height="16" viewBox="0 0 527 483">
-              <path d="M1.5 264.208C1.5 119.17 118.974 1.5 264 1.5C409.026 1.5 526.5 119.17 526.5 264.208C526.5 351.905 483.535 429.569 417.628 477.247C406.996 484.938 392.595 481.729 385.684 471.362L376.758 457.971C369.699 447.382 372.818 433.617 382.485 426.529C432.426 389.914 464.783 330.851 464.783 264.208C464.783 153.128 374.839 63.1707 264 63.1707C153.161 63.1707 63.2173 153.128 63.2173 264.208C63.2173 330.851 95.5742 389.914 145.515 426.529C155.182 433.617 158.301 447.382 151.242 457.971L142.316 471.362C135.405 481.729 121.004 484.938 110.372 477.247C44.4653 429.569 1.5 351.905 1.5 264.208Z" fill="#1ED760"></path>
-              <path d="M104.5 263.216C104.5 174.586 175.78 102.5 264 102.5C352.22 102.5 423.5 174.586 423.5 263.216C423.5 315.346 398.84 361.707 360.685 391.048C350.27 399.057 336.041 395.66 329.404 385.602L323.251 376.279C316.458 365.986 319.652 353.018 328.353 346.12C352.699 326.817 368.307 296.878 368.307 263.216C368.307 204.912 321.476 157.884 264 157.884C206.524 157.884 159.693 204.912 159.693 263.216C159.693 296.878 175.301 326.817 199.647 346.12C208.348 353.018 211.542 365.986 204.749 376.279L198.596 385.602C191.959 395.66 177.73 399.057 167.315 391.048C129.16 361.707 104.5 315.346 104.5 263.216Z" fill="#1ED760"></path>
-              <path d="M200.5 261C200.5 226.296
-      229.118 198.5 264 198.5C298.882 198.5 327.5 226.296 327.5 261C327.5 295.704 298.882 323.5 264 323.5C229.118 323.5 200.5 295.704 200.5 261Z" fill="#1ED760"></path>
-            </svg>
-            <div class="side-menu__link-text">Мои выпуски</div>
-          </a>
-        </li> -->
       </ul>
     </nav>
     <ul class="side-menu__list recent-playlists">
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №1</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №2</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №3</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №4</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №5</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №1</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №2</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №3</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №4</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №5</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №1</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №2</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №3</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №4</a></li>
-      <li class="side-menu__item"><a href="#" class="side-menu__link link">Мой плейлист №5</a></li>
     </ul>
       <a class="side-menu__link  side-menu__link_last-link link" href="#"><svg class="side-menu__svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zM1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12z"></path><path d="M12 6.05a1 1 0 011 1v7.486l1.793-1.793a1 1 0 111.414 1.414L12 18.364l-4.207-4.207a1 1 0 111.414-1.414L11 14.536V7.05a1 1 0 011-1z"></path></svg><span>Установить приложение</span></a>
   </div> 
   </aside>
   <main class="main">
     <div class="main__wrapper">
-      <section class="playlists-box">
-        <div class="playlists-box__container playlists-box__container_all-visible"><!-- Исправление 1-го замечания. С помощью такого html-кода будет отображаться конкретная коллекция плейлистов на новой странице -->
-          <h2 class="playlists-box__title">Недавно прослушано</h2>
-          <div class="playlists-box__all-btn"><a class="playlists-box__playlist-link playlists-box__playlist-link_hidden" href="#">все</a></div> 
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/psychology.jpg" alt="playlist img">
-            <div class="playlist__title">Психология на дожде</div>
-            <div class="playlist__authors">TVRAIN</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/three-puncts.jpg" alt="playlist img">
-            <div class="playlist__title">Три пункта</div>
-            <div class="playlist__authors">Гоша Голышев и Саша Гавриков</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/you-meaningful.jpg" alt="playlist img">
-            <div class="playlist__title">Ты - это важно</div>
-            <div class="playlist__authors">Елена Мицкевич</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/TED.jpg" alt="playlist img">
-            <div class="playlist__title">TED на русском</div>
-            <div class="playlist__authors">TED на русском</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/freud.jpg" alt="playlist img">
-            <div class="playlist__title">Разговорчики по Фрейду</div>
-            <div class="playlist__authors">podcast.adnosiny.by</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/psychology.jpg" alt="playlist img">
-            <div class="playlist__title">Психология на дожде</div>
-            <div class="playlist__authors">TVRAIN</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/three-puncts.jpg" alt="playlist img">
-            <div class="playlist__title">Три пункта</div>
-            <div class="playlist__authors">Гоша Голышев и Саша Гавриков</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/you-meaningful.jpg" alt="playlist img">
-            <div class="playlist__title">Ты - это важно</div>
-            <div class="playlist__authors">Елена Мицкевич</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/TED.jpg" alt="playlist img">
-            <div class="playlist__title">TED на русском</div>
-            <div class="playlist__authors">TED на русском</div>
-          </div>
-          <div class="playlist">
-            <img  class="playlist__img" src="imgs/freud.jpg" alt="playlist img">
-            <div class="playlist__title">Разговорчики по Фрейду</div>
-            <div class="playlist__authors">podcast.adnosiny.by</div>
-          </div>
-        </div>
-      </section>
-    <section class="playlists-box">
-      <div class="playlists-box__container">
-        <h2 class="playlists-box__title">Недавно прослушано</h2>
-        <div class="playlists-box__all-btn"><a class="playlists-box__playlist-link" href="#">все</a></div> <!-- Здесь и в следующей коллекции плейлистов оставила, как у меня будет на самом деле:
-        при клике на ссылку "все" - переход на новую страницу (точно такая же, только на ней будет всего одна конкретная коллекция плейлистов уже без обрезания (код коллекции плейлистов можно посмотреть в примере выше)) -->
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/psychology.jpg" alt="playlist img">
-          <div class="playlist__title">Психология на дожде</div>
-          <div class="playlist__authors">TVRAIN</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/three-puncts.jpg" alt="playlist img">
-          <div class="playlist__title">Три пункта</div>
-          <div class="playlist__authors">Гоша Голышев и Саша Гавриков</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/you-meaningful.jpg" alt="playlist img">
-          <div class="playlist__title">Ты - это важно</div>
-          <div class="playlist__authors">Елена Мицкевич</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/TED.jpg" alt="playlist img">
-          <div class="playlist__title">TED на русском</div>
-          <div class="playlist__authors">TED на русском</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/freud.jpg" alt="playlist img">
-          <div class="playlist__title">Разговорчики по Фрейду</div>
-          <div class="playlist__authors">podcast.adnosiny.by</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/psychology.jpg" alt="playlist img">
-          <div class="playlist__title">Психология на дожде</div>
-          <div class="playlist__authors">TVRAIN</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/three-puncts.jpg" alt="playlist img">
-          <div class="playlist__title">Три пункта</div>
-          <div class="playlist__authors">Гоша Голышев и Саша Гавриков</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/you-meaningful.jpg" alt="playlist img">
-          <div class="playlist__title">Ты - это важно</div>
-          <div class="playlist__authors">Елена Мицкевич</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/TED.jpg" alt="playlist img">
-          <div class="playlist__title">TED на русском</div>
-          <div class="playlist__authors">TED на русском</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/freud.jpg" alt="playlist img">
-          <div class="playlist__title">Разговорчики по Фрейду</div>
-          <div class="playlist__authors">podcast.adnosiny.by</div>
-        </div>
+      <section class="tracks-list main__tracks-list">
+      <h2 class="title">Треки</h2>
+      <a class="all-link tracks-list__all-link all-link_hidden" id="tracksAll" href="#">все</a> 
+      <div class="tracks-list__tracks-container" id="tracksContainer">
+        <div class="filler">Начните поиск</div>
       </div>
-    </section>
-    <section class="playlists-box">
-      <div class="playlists-box__container">
-        <h2 class="playlists-box__title">Сегодняшние хиты</h2>
-        <div class="playlists-box__all-btn"><a class="playlists-box__playlist-link" href="#">все</a></div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/psychology.jpg" alt="playlist img">
-          <div class="playlist__title">Психология на дожде</div>
-          <div class="playlist__authors">TVRAIN</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/three-puncts.jpg" alt="playlist img">
-          <div class="playlist__title">Три пункта</div>
-          <div class="playlist__authors">Гоша Голышев и Саша Гавриков</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/you-meaningful.jpg" alt="playlist img">
-          <div class="playlist__title">Ты - это важно</div>
-          <div class="playlist__authors">Елена Мицкевич</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/TED.jpg" alt="playlist img">
-          <div class="playlist__title">TED на русском</div>
-          <div class="playlist__authors">TED на русском</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/freud.jpg" alt="playlist img">
-          <div class="playlist__title">Разговорчики по Фрейду</div>
-          <div class="playlist__authors">podcast.adnosiny.by</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/psychology.jpg" alt="playlist img">
-          <div class="playlist__title">Психология на дожде</div>
-          <div class="playlist__authors">TVRAIN</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/three-puncts.jpg" alt="playlist img">
-          <div class="playlist__title">Три пункта</div>
-          <div class="playlist__authors">Гоша Голышев и Саша Гавриков</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/you-meaningful.jpg" alt="playlist img">
-          <div class="playlist__title">Ты - это важно</div>
-          <div class="playlist__authors">Елена Мицкевич</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/TED.jpg" alt="playlist img">
-          <div class="playlist__title">TED на русском</div>
-          <div class="playlist__authors">TED на русском</div>
-        </div>
-        <div class="playlist">
-          <img  class="playlist__img" src="imgs/freud.jpg" alt="playlist img">
-          <div class="playlist__title">Разговорчики по Фрейду</div>
-          <div class="playlist__authors">podcast.adnosiny.by</div>
-        </div>
+      </section>
+      <section class="cards-box">
+        <div class="cards-box__container">
+          <h2 class="cards-box__title title">Плейлисты</h2>
+          <a class="all-link cards-box__all-link all-link_hidden" id="playlistsAll" href="#">все</a> 
+          <!-- 
+          при клике на ссылку "все" - переход на новую страницу (точно такая же, только на ней будет всего одна конкретная коллекция плейлистов уже без обрезания (код коллекции плейлистов можно посмотреть в примере выше)) -->
+          <div class="cards-box__cards-container" id="playlistsContainer">
+            <div class="filler">Начните поиск</div>
+          </div>
         </div>
       </section>
     </div>
   </main>
   <footer class="footer spotify-app__footer">
-      <div class="footer__song-attributes">
-          <img class="footer__song-cover" src="imgs/current-song.jfif" alt="song cover">
-          <div class="footer__song-labels">
-            <a href="#" class="footer__song-name link link_white ">Unstoppable</a><br>
-            <a href="#" class="footer__song-authors link">Sia</a>
+      <div class="footer__track">
+        <div class="track-main-attrs">
+          <img class="track-main-attrs__cover" src="imgs/current-song.jfif" alt="song cover">
+          <div class="track-main-attrs__labels">
+            <a href="#" class="track-main-attrs__name link link_white ">Unstoppable</a><br>
+            <a href="#" class="track-main-attrs__artists link">Sia</a>
           </div>
-        <svg class="footer__svg footer__svg_green" height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M15.724 4.22A4.313 4.313 0 0012.192.814a4.269 4.269 0 00-3.622 1.13.837.837 0 01-1.14 0 4.272 4.272 0 00-6.21 5.855l5.916 7.05a1.128 1.128 0 001.727 0l5.916-7.05a4.228 4.228 0 00.945-3.577z"></path></svg>
-        <svg class="footer__svg" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" fill-rule="evenodd"><path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fill-rule="nonzero"></path><path d="M10 8h4v3h-4z"></path></g></svg>
+        </div>
+        <div class="footer__svgs-box">
+          <svg class="footer__svg footer__svg_green" height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M15.724 4.22A4.313 4.313 0 0012.192.814a4.269 4.269 0 00-3.622 1.13.837.837 0 01-1.14 0 4.272 4.272 0 00-6.21 5.855l5.916 7.05a1.128 1.128 0 001.727 0l5.916-7.05a4.228 4.228 0 00.945-3.577z"></path></svg>
+          <svg class="footer__svg" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" fill-rule="evenodd"><path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fill-rule="nonzero"></path><path d="M10 8h4v3h-4z"></path></g></svg>
+        </div>
       </div>
       <div class="footer__audio-controls">
         <audio class="footer__audio" controls>
           <source class="footer__audio-src" src="check.mp3">
         </audio>
       </div>
-      <div class="footer__additional-funcs">
+      <div class="footer__svgs-box">
         <svg class="footer__svg"  height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M15 15H1v-1.5h14V15zm0-4.5H1V9h14v1.5zm-14-7A2.5 2.5 0 013.5 1h9a2.5 2.5 0 010 5h-9A2.5 2.5 0 011 3.5zm2.5-1a1 1 0 000 2h9a1 1 0 100-2h-9z"></path></svg>
         <svg class="footer__svg"  height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M6 2.75C6 1.784 6.784 1 7.75 1h6.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15h-6.5A1.75 1.75 0 016 13.25V2.75zm1.75-.25a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h6.5a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25h-6.5zm-6 0a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25H4V11H1.75A1.75 1.75 0 010 9.25v-6.5C0 1.784.784 1 1.75 1H4v1.5H1.75zM4 15H2v-1.5h2V15z"></path><path d="M13 10a2 2 0 11-4 0 2 2 0 014 0zm-1-5a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
       </div> 

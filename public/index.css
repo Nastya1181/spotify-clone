@@ -208,69 +208,147 @@
 .main{
     grid-area: main;
     overflow-y: scroll;
+   /*  background-image: url('imgs/sm.png');
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: 50% 40%; */
 }
 
 .main__wrapper {
     padding: 25px;
 }
 
-.playlists-box__container { /* показываются только те плейлисты, что влезают */
-    display: grid;
+.title {
+    font-size: 24px;  
+}
+
+.main__tracks-list {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    max-height: 350px;
     overflow: hidden;
     position: relative;
-    column-gap: 15px;
-    padding-top: 50px;
+}
+
+.tracks-list_all {
+    max-height: fit-content;
+}
+
+.tracks-list__tracks-container {
+    margin-top: 20px;
+}
+
+.tracks-list__track {
+    margin-bottom: 15px;
+    background-color: rgb(27, 23, 23);
+}
+
+
+.tracks-list__track:last-child {
+    margin-bottom: 0px;
+}
+
+
+.tracks-list__track-duration {
+    margin-right: 15px;
+}
+
+.track-main-attrs {
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+
+.track-main-attrs__cover /* .footer__song-cover */
+{
+   /*  height: 100%;
+    width: auto; */
+    margin-right: 15px;
+   /*  min-height: 64px;
+    min-width: auto; */
+    height: 64px;
+    width: auto;
+}
+
+
+.track-main-attrs__labels/* .footer__song-labels */ {
+    margin-right: 15px; 
+    width: 50%;
+}
+
+.track-main-attrs__name, .track-main-attrs__artists/* .footer__song-name, .footer__song-authors */ {
+    width: 100%;
+}
+
+.filler {
+    color: rgb(102, 238, 163);
+    margin-left: 10px;
+}
+
+.cards-box__container {
+    position: relative;
+}
+
+.cards-box__cards-container  { /* показываются только те плейлисты, что влезают */
+    display: grid;
+    overflow: hidden;
+    padding-top: 48px;
     margin-bottom: 30px;
+    column-gap: 15px;
     grid-template-rows: 1fr;
     grid-auto-rows: 0;
     row-gap: 0px;
     grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
 }
 
-.playlists-box__container_all-visible { /* все плейлисты показываются */
-    overflow: visible;
+.cards-box__cards-container_all-visible { /* все плейлисты показываются */
+    /* overflow: visible; */
     row-gap: 15px;
     grid-auto-rows: auto;
 }
 
-.playlists-box__title {
-    position: absolute;
-    font-size: 24px;  
+.cards-box__title {
+    position: absolute;  
 }
 
-.playlists-box__all-btn {
+.cards-box__all-link, .tracks-list__all-link {
     position: absolute;
     right: 0;
     top: 5px;
 }
 
-.playlists-box__playlist-link {
+.all-link {
     color:white;
     text-decoration: none;
 } 
 
-.playlists-box__playlist-link:hover {
+.all-link:hover {
     text-decoration: underline;
 } 
 
-.playlists-box__playlist-link_hidden {
+.all-link_hidden {
     display: none;
 }
 
-.playlist {
+
+.card {
     background-color: rgb(27, 23, 23);
     border-radius: 10px; 
     min-height: 295px;
     min-width: 220px;
+    max-width: 300px;
+    max-height: auto;
 }
 
-.playlist__img {
+.card__img {
     width: 100%;
     height: auto;
     padding: 15px 15px 10px 15px;
+    object-fit: cover;
+    
 }
 
-.playlist__title, .playlist__authors {
+.card__title, .card__artists {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -278,18 +356,23 @@
     padding:  0 25px;
 }
 
-.playlist__authors {
+.card__artists {
   padding-bottom: 20px;
   color: gray;
 } 
 
 
-.playlist__title {
+.card__title {
     font-weight: 700;
 }
 
 
 .footer {
+    display: none;
+}
+
+.footer_visible
+{
     grid-area: footer;
     background-color: rgb(17, 16, 16);
     border-top: 1px solid gray;
@@ -297,6 +380,7 @@
     align-items: center;
     width: 100%;
     color: white;
+    justify-content: space-between;
 }
 
 .spotify-app__footer {
@@ -305,44 +389,48 @@
     padding: 15px;
 }
 
-.footer__song-cover
+/* .track__cover /* .footer__song-cover 
 {
     height: 100%;
     width: auto;
     margin-right: 15px;
 }
 
-.footer__song-labels {
+.track-labels/* .footer__song-labels  {
     margin-right: 15px; 
     width: 50%;
 }
 
-.footer__song-name, .footer__song-authors {
+.track__name, .track__authors/* .footer__song-name, .footer__song-authors {
     width: 100%;
-}
+} */
 
 
-.footer__song-attributes, .footer__additional-funcs { /*.footer__additional-funcs оставила flex на случай, если в будущем количество svg увеличится*/
+.footer__track, .tracks-list__track {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
 }
 
-.footer__song-attributes
-{
-    width: 30%;
-    align-items: center;
-}
+.footer__track {
+    max-width: 30%;
+    min-width: fit-content;
+} 
 
 .footer__audio-controls
 {
     width: 40%;
+    margin-left: 100px; 
 }
 
 .footer__audio {
     width: 100%;
 }
 
-.footer__additional-funcs
+.footer__svgs-box/* .footer__additional-funcs */
 {
+    display: flex; /* ? */
     width: 30%;
     justify-content: flex-end; 
 }
@@ -360,3 +448,6 @@
 {
     fill: #32ab42;
 }
+
+
+
