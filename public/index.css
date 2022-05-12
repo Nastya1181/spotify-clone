@@ -70,6 +70,7 @@
 
 .header__btn_round {
     border-radius: 50%;
+    display: inline-block;
 }
 
 .header__btn_soft-angles {
@@ -115,6 +116,7 @@
     border-color: transparent;
 }
 
+
 .header__search-input {
     background-image: url('imgs/search-black.svg');
     background-size: 24px 24px;
@@ -143,6 +145,7 @@
     flex-direction: column;
     align-items: flex-start;
     height: 100%;
+    width: 170px;
 }
 
 .side-menu__logo
@@ -162,6 +165,7 @@
 .side-menu__list {
     margin: 15px 0;
     list-style: none;
+    width: inherit;
 }
 
 .side-menu__list_no-padding {
@@ -203,6 +207,7 @@
 
 .recent-playlists {
     overflow-y: scroll;
+ 
 }
 
 .main{
@@ -337,7 +342,7 @@
     min-height: 295px;
     min-width: 220px;
     max-width: 300px;
-    max-height: auto;
+    max-height: 300px;
 }
 
 .card__img {

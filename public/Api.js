@@ -4,6 +4,9 @@ class Api {
     static baseUrl = 'https://api.spotify.com/';
     static accountsUrl = 'https://accounts.spotify.com/';
 
+    /**
+     * Метод получения от сервера access токена 
+     */
     static requestAuthorize()
     {
       return fetch('https://accounts.spotify.com/api/token', {
@@ -18,10 +21,18 @@ class Api {
         return res.json();
         }
         return Promise.reject(res);
-        })
+        }).then((data)=>{return data})
+        .catch((err) => {
+          this.switchError(err.status);
+        });;
     }
 
-    static search(searchParam,limit,url=`${this.baseUrl}v1/search?q=${searchParam}&type=track,playlist&include_external=audio&limit=${limit}`) {
+    /**
+     * Метод получения от сервера результатов поиска 
+     * @param {string} searchParam - параметр поиска
+     * @param {string} url - ссылка для получения ответа от сервера, может быть получена от сервера для получения следующих 10 элементов
+     */
+    static search(searchParam,url=`${this.baseUrl}v1/search?q=${searchParam}&type=track,playlist&include_external=audio`) {
       return fetch(url, {
       headers: {
       'Content-Type': 'application/json',
@@ -35,15 +46,13 @@ class Api {
       return Promise.reject(res);
       }).then((data)=>{return data})
       .catch((err) => {
-        console.log(err);
-        if (err.status === 401){
-          alert('Вы не авторизованы, нажмите "Войти" в правом верхнем углу');
-          localStorage.setItem('logButtonState','войти');  
-          }
-        /*  } */
+        this.switchError(err.status);
       });
-      }
+    }
 
+/**
+ * Метод получения от сервера подборки плейлистов от редактора  
+ */
       static  getFeaturedPlaylists() {
         return fetch(`${this.baseUrl}v1/browse/featured-playlists`, {
         headers: {
@@ -58,14 +67,17 @@ class Api {
         return Promise.reject(res);
         }).then((data)=>{return data})
         .catch((err) => {
-          console.log(err);
+          this.switchError(err.status);
         });
         }
          
-
-
-       /*  static  getAlbumTracks(albumId,limit) {
-          return fetch(`${this.baseUrl}v1/albums/${albumId}/tracks?limit=${limit}`, {
+/**
+ * Метод получения  от сервера треков плейлиста
+ * @param {string} playlistId - id, полученный от сервера
+ * @param {string} url - ссылка для получения ответа от сервера, может быть получена от сервера для получения следующих 10 элементов
+ */
+        static  getPlaylistTracks(playlistId,  url=`${this.baseUrl}v1/playlists/${playlistId}/tracks`) {
+          return fetch(url, {
           headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -76,15 +88,50 @@ class Api {
           return res.json();
           }
           return Promise.reject(res);
-          }).then((data)=>{return data})
+          }).then((data) => {
+            let items = [];
+            let dataItems = data['items'];
+            for (let item in dataItems)
+            {
+              items.push(dataItems[item]['track']);
+            }
+            return {'tracks': {
+              'next': data['next'],
+              'items': items
+            }}
+          }) 
           .catch((err) => {
-            console.log(err);
-            if (err.status === 401){
-              alert('Вы не авторизованы, нажмите "Войти" в правом верхнем углу');}
-
+            this.switchError(err.status);
           });
-          } */
+          }
 
+          /**
+           * Обработка ошибок
+           * @param {number} errStatus - статус ошибки
+           */
+          static switchError(errStatus) {
+            switch(errStatus) {
+              case 401:
+                {
+                  if  (localStorage['access_token'] == null)
+                  {
+                    alert('Прежде чем начать использование сервиса, залогиньтесь');
+                  }
+                  else {
+                    alert('Перелогинитьтесь, срок действия токена истек');
+                  }
+                  break;
+                }
+              case 400:
+                {
+                  alert('нет того, что вы запрашиваете');     
+                  break;
+                }
+              default:
+                alert('странно, что-то не то');
+                break;
+            }
+          }
 }
 
 export default Api;
