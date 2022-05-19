@@ -1,6 +1,6 @@
-import  Card from './card.js';
+import Card from "./card.js";
 
-class Track extends  Card {
+class Track extends Card {
   /**
    * @constructor
    * @param {string} name - имя трека
@@ -9,33 +9,32 @@ class Track extends  Card {
    * @param {string} id - id, полученный от сервера
    * @param {number} msDuration - продолжительнось трека в ms
    */
-    constructor(name, imgUrl, artists, id, msDuration) {
-        super(name, imgUrl, artists, id);
-        this.minutesDuration = this.getMinutesDuration(msDuration);
-    }
+  constructor(name, imgUrl, artists, id, msDuration) {
+    super(name, imgUrl, artists, id);
+    this.minutesDuration = this.getMinutesDuration(msDuration);
+  }
 
-    /**
-     * Получение продолжительности трека в минутах
-     * @param {number} ms - продолжительнось трека в ms
-     * @returns {string} продолжительность трека в минутах
-     */
-    getMinutesDuration(ms) {
-        let seconds = ms *  0.001;
-        let minutes = Math.floor(seconds / 60);
-        let secondsRemainder = Math.ceil(seconds % 60);
-        if (secondsRemainder < 10 && secondsRemainder)
-        {
-            secondsRemainder = '0' + secondsRemainder;
-        }
-        return `${minutes}:${secondsRemainder}`;
+  /**
+   * Получение продолжительности трека в минутах
+   * @param {number} ms - продолжительнось трека в ms
+   * @returns {string} продолжительность трека в минутах
+   */
+  getMinutesDuration(ms) {
+    let seconds = ms * 0.001;
+    let minutes = Math.floor(seconds / 60);
+    let secondsRemainder = Math.ceil(seconds % 60);
+    if (secondsRemainder < 10 && secondsRemainder) {
+      secondsRemainder = "0" + secondsRemainder;
     }
+    return `${minutes}:${secondsRemainder}`;
+  }
 
-    /**
-     * Получение HTML-кода трека
-     * @returns {string} HTML-код трека
-     */
-    template()  {
-        return `<div class="tracks-list__track" id=${this.id}>
+  /**
+   * Получение HTML-кода трека
+   * @returns {string} HTML-код трека
+   */
+  template() {
+    return `<div class="tracks-list__track" id=${this.id}>
         <div class="track-main-attrs">
           <img class="track-main-attrs__cover" src="${this.imgUrl}" alt="song cover">
           <div class="track-main-attrs__labels">
@@ -44,8 +43,8 @@ class Track extends  Card {
           </div>
         </div>
         <div class="tracks-list__track-duration">${this.minutesDuration}</div>
-      </div>`
-    }
+      </div>`;
+  }
 }
 
 export default Track;
