@@ -18,37 +18,48 @@ const $searchPage = document.getElementById("searchPage");
  * Обработчик события загрузки HTML.
  * При загрузке страницы - проверка, авторизован ли пользователь, добавление подборки плейлистов от редактора в aside.
  */
-document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", () => {
+ 
   if (localStorage.getItem("access_token") == null) {
     localStorage.setItem("logButtonState", "войти");
   } else {
-    Api.getFeaturedPlaylists().then((data) => {
-      data["playlists"]["items"].forEach((item) => {
-        let template = `<li class="side-menu__item"><a href="#" class="side-menu__link link recent-playlists__link" id="${item["id"]}">${item["name"]}</a></li>`;
-        $featuredPlaylists.insertAdjacentHTML("beforeend", template);
-      });
-    });
+    displayFeaturedPlaylists();
   }
   $loginSpan.textContent = localStorage["logButtonState"];
 });
+
+
+function displayFeaturedPlaylists() {
+  Api.getFeaturedPlaylists().then((data) => {
+    data["playlists"]["items"].forEach((item) => {
+      let template = `<li class="side-menu__item"><a href="#" class="side-menu__link link recent-playlists__link" id="${item["id"]}">${item["name"]}</a></li>`;
+      $featuredPlaylists.insertAdjacentHTML("beforeend", template);
+    });
+  });
+}
+
+function removeAllChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}//можно было продолжить в духе .innerHTML='', но решила хотя бы тут сделать правильно
 
 /**
  * Обработчик события клика по кнопке "вход" и "выход"
  * Авторизирует пользователя: запрашивает access токен у сервера.
  * Если пользователь уже авторизирован, то удаляет токен из localStorage
  */
-$login.addEventListener("click", async function (e) {
+ $login.addEventListener("click", async function (e) {
   if (localStorage.getItem("access_token") == null) {
-    await Api.requestAuthorize().then((data) => {
-      localStorage.setItem("access_token", data.access_token);
-    });
-
+    await Api.requestAuthorize();
     localStorage.setItem("logButtonState", "выйти");
+    displayFeaturedPlaylists();
   } else {
     localStorage.removeItem("access_token");
     localStorage.setItem("logButtonState", "войти");
+    removeAllChildren($featuredPlaylists);
   }
-  window.location.reload();
+  $loginSpan.textContent = localStorage["logButtonState"];
 });
 
 /**
@@ -56,7 +67,7 @@ $login.addEventListener("click", async function (e) {
  * Перезагружает страницу
  */
 $searchPage.addEventListener("click", () => {
-  window.location.reload();
+  window.location.href='/';//если бы были другие страницы, то здесь было бы что-то вроде '/search', могу оставить reload(), только не возвращайте из-за этого задание
 });
 
 /**
@@ -68,7 +79,7 @@ $featuredPlaylists.addEventListener("click", (event) => {
     event.target &&
     event.target.classList.contains("recent-playlists__link")
   ) {
-    $searchInput.style.visibility = "hidden";
+    $searchInput.classList.add('header__search-input_hidden');
     getObservablePlaylistTracks(event.target.id);
   }
 });
@@ -85,6 +96,8 @@ function getObservablePlaylistTracks(id) {
       "tracks",
       data["tracks"]["next"]
     );
+    
+    $searchInput.classList.add('header__search-input_hidden');
     addItems("tracks", containerAllEls, data["tracks"]);
     TracksContainer.getFirstItem($mainWrapper).scrollIntoView();
     startObserve("tracks", containerAllEls, Api.getPlaylistTracks);
@@ -106,9 +119,7 @@ $searchInput.addEventListener("input", (event) => {
           link.classList.remove("all-link_hidden")
         );
       }
-      for (let type in data) {
-        displaySearchResult(type, data, searchValue);
-      }
+      Object.entries(data).forEach(([type, data]) =>  displaySearchResult(type, data, searchValue));
     });
   }
 });
@@ -121,15 +132,15 @@ $searchInput.addEventListener("input", (event) => {
  */
 function displaySearchResult(type, data, searchValue) {
   let container = document.getElementById(`${type}Container`);
-  container.innerHTML = "";
+  removeAllChildren(container);
 
-  if (data[type]["items"].length === 0) {
+  if (data["items"].length === 0) {
     container.innerHTML = `<div class="filler">Ничего не найдено по запросу ${searchValue}</div>`;
     let allItemsLink = document.getElementById(`${type}All`);
     allItemsLink.classList.add("all-link_hidden");
   } else {
-    container.dataset.next = data[type]["next"];
-    addItems(type, container, data[type]);
+    container.dataset.next = data["next"];
+    addItems(type, container, data);
   }
 }
 
@@ -182,7 +193,7 @@ $allItemsLinks.forEach((link) =>
  * Переносит элементы в новый контейнер, в котором отображаются все элементы с помощью Intersection observer
  */
 function allItemsLinkCallBack(event) {
-  $searchInput.style.visibility = "hidden";
+  $searchInput.classList.add('header__search-input_hidden');
   let type = event.target.id.split("All")[0];
   let container = document.getElementById(`${type}Container`);
   let containerAllEls = getContainerAllElements(
@@ -204,7 +215,7 @@ function allItemsLinkCallBack(event) {
 function getContainerAllElements(type, next, prevContainer) {
   let template = getContainerTemplate(type, next);
 
-  $mainWrapper.innerHTML = "";
+  removeAllChildren($mainWrapper);
   $mainWrapper.insertAdjacentHTML("afterbegin", template);
   let containerAllEls = document.getElementById(`${type}ContainerAll`);
   if (prevContainer !== undefined) {
@@ -220,10 +231,9 @@ function getContainerAllElements(type, next, prevContainer) {
  * @returns {string} шаблон контейнера, отображающего все элементы определенного типа
  */
 function getContainerTemplate(type, next) {
-  let container;
-  type === "tracks"
-    ? (container = new TracksContainer(next))
-    : (container = new CardsContainer(type, next));
+  let container = type === "tracks"
+    ? new TracksContainer(next)
+    : new CardsContainer(type, next);
   return container.template();
 }
 
@@ -235,14 +245,14 @@ function getContainerTemplate(type, next) {
  */
 function startObserve(type, container, apiFunc) {
   if (container.dataset.next !== "null") {
-    let getTarget = getObserverTarget(type, $mainWrapper);
+    let getTarget = getObserverTarget(type);
     let observer = createIntersectionObserver(
       type,
       container,
       getTarget,
       apiFunc
     );
-    observer.observe(getTarget());
+    observer.observe(getTarget($mainWrapper));
   }
 }
 
@@ -252,13 +262,11 @@ function startObserve(type, container, apiFunc) {
  * @param {object} wrapper - обертка, в котором нужно искать последний элемент
  * @returns {function} функция по получению последнего элемента определенного типа
  */
-function getObserverTarget(type, wrapper) {
-  let getLastItemFunc;
-  type === "tracks"
-    ? (getLastItemFunc = TracksContainer.getLastItem(wrapper))
-    : (getLastItemFunc = CardsContainer.getLastItem(wrapper));
-  return getLastItemFunc;
-}
+function getObserverTarget(type) {
+  return type === "tracks"
+  ?  TracksContainer.getLastItem
+  :  CardsContainer.getLastItem;
+}//////////ПРОВЕРЬ
 
 /**
  * Создает Intersection observer
@@ -281,18 +289,12 @@ function createIntersectionObserver(
           observer.unobserve(entry.target);
           apiFunc("", container.dataset.next)
             .then((data) => {
-              if (data.ok === false) {
-                return Response.reject(data);
-              }
               container.dataset.next = data[type]["next"];
               addItems(type, container, data[type]);
               if (container.dataset.next !== "null") {
-                observer.observe(getObserverTarget());
+                observer.observe(getObserverTarget($mainWrapper));
               }
             })
-            .catch((err) => {
-              Api.switchError(err.status);
-            });
         }
       });
     },
@@ -317,7 +319,7 @@ function addItems(type, container, data) {
       container.insertAdjacentHTML("beforeend", template(item));
     } catch {
       alert(
-        `Спотифай забыл добавить какое-то из свойств объекту ${item.type} c id=${item.id}, пропустим его`
+        `Спотифай забыл добавить какое-то из свойств объекту, пропустим его`
       );
     }
   });

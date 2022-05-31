@@ -60,6 +60,7 @@
     padding:  10px 25px;
 }
 
+
 .header__svg {
     display: block;
     margin: auto;
@@ -127,6 +128,10 @@
     padding: 10px;
     padding-left: 40px;
     width: 340px;
+}
+
+.header__search-input_hidden {
+    visibility: hidden;
 }
 
 .side-menu {

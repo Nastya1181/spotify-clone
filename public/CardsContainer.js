@@ -2,9 +2,9 @@ class CardsContainer {
   /**
    * @constructor
    * @param {string} type - тип элементов (на данный момент только playlists, возможно добавление albums и тд)
-   * @param {string} next - ссылка на следующие 10 элементов типа
+   * @param {string} [next] - ссылка на следующие 10 элементов типа
    */
-  constructor(type, next = null) {
+  constructor(type, next) {
     this.type = type;
     /* this.nameRu = nameRu; */
     this.next = next;
@@ -16,9 +16,7 @@ class CardsContainer {
    * @returns {function} функция по получению последнего элемента типа
    */
   static getLastItem(wrapper) {
-    return function () {
       return wrapper.querySelector(".card:last-child");
-    };
   }
 
   /**

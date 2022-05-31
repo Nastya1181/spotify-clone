@@ -10,9 +10,9 @@ class Card {
     this.name = name;
     this.id = id;
     this.imgUrl = imgUrl;
-    typeof artists === "string"
-      ? (this.artists = artists)
-      : (this.artists = this.getArtists(artists)); //interface isearchitem
+    this.artists = typeof artists === "string"
+      ? artists
+      :  this.getArtists(artists); //interface isearchitem
   }
 
   /**

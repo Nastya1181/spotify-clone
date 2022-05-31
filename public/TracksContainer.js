@@ -3,9 +3,9 @@ class TracksContainer {
 
   /**
    * @constructor
-   * @param {*} next - ссылка на следующие 10 треков
+   * @param {*} [next] - ссылка на следующие 10 треков
    */
-  constructor(next = null) {
+  constructor(next) {
     this.next = next;
   }
 
@@ -15,9 +15,7 @@ class TracksContainer {
    * @returns {function} функция по получению последнего трека
    */
   static getLastItem(wrapper) {
-    return function () {
       return wrapper.querySelector(".tracks-list__track:last-child");
-    };
   }
 
   /**
