@@ -31,8 +31,8 @@ const $searchPage = document.getElementById("searchPage");
 
 function displayFeaturedPlaylists() {
   Api.getFeaturedPlaylists().then((data) => {
-    data["playlists"]["items"].forEach((item) => {
-      let template = `<li class="side-menu__item"><a href="#" class="side-menu__link link recent-playlists__link" id="${item["id"]}">${item["name"]}</a></li>`;
+    data.playlists.items.forEach((item) => {
+      let template = `<li class="side-menu__item"><a href="#" class="side-menu__link link recent-playlists__link" id="${item.id}">${item.name}</a></li>`;
       $featuredPlaylists.insertAdjacentHTML("beforeend", template);
     });
   });
@@ -67,7 +67,7 @@ function removeAllChildren(element) {
  * Перезагружает страницу
  */
 $searchPage.addEventListener("click", () => {
-  window.location.href='/';//если бы были другие страницы, то здесь было бы что-то вроде '/search', могу оставить reload(), только не возвращайте из-за этого задание
+  window.location.reload();
 });
 
 /**
@@ -94,11 +94,11 @@ function getObservablePlaylistTracks(id) {
   Api.getPlaylistTracks(id).then((data) => {
     let containerAllEls = getContainerAllElements(
       "tracks",
-      data["tracks"]["next"]
+      data.tracks.next
     );
     
     $searchInput.classList.add('header__search-input_hidden');
-    addItems("tracks", containerAllEls, data["tracks"]);
+    addItems("tracks", containerAllEls, data.tracks);
     TracksContainer.getFirstItem($mainWrapper).scrollIntoView();
     startObserve("tracks", containerAllEls, Api.getPlaylistTracks);
   });
@@ -134,12 +134,12 @@ function displaySearchResult(type, data, searchValue) {
   let container = document.getElementById(`${type}Container`);
   removeAllChildren(container);
 
-  if (data["items"].length === 0) {
+  if (data.items.length === 0) {
     container.innerHTML = `<div class="filler">Ничего не найдено по запросу ${searchValue}</div>`;
     let allItemsLink = document.getElementById(`${type}All`);
     allItemsLink.classList.add("all-link_hidden");
   } else {
-    container.dataset.next = data["next"];
+    container.dataset.next = data.next;
     addItems(type, container, data);
   }
 }
@@ -266,7 +266,7 @@ function getObserverTarget(type) {
   return type === "tracks"
   ?  TracksContainer.getLastItem
   :  CardsContainer.getLastItem;
-}//////////ПРОВЕРЬ
+}
 
 /**
  * Создает Intersection observer
@@ -289,7 +289,7 @@ function createIntersectionObserver(
           observer.unobserve(entry.target);
           apiFunc("", container.dataset.next)
             .then((data) => {
-              container.dataset.next = data[type]["next"];
+              container.dataset.next = data[type].next;
               addItems(type, container, data[type]);
               if (container.dataset.next !== "null") {
                 observer.observe(getObserverTarget($mainWrapper));
@@ -314,7 +314,7 @@ function createIntersectionObserver(
  */
 function addItems(type, container, data) {
   const template = getItemTemplateFunc(type);
-  data["items"].forEach((item) => {
+  data.items.forEach((item) => {
     try {
       container.insertAdjacentHTML("beforeend", template(item));
     } catch {
@@ -335,20 +335,20 @@ function getItemTemplateFunc(type) {
     case "tracks":
       return (item) => {
         return new Track(
-          item["name"],
-          item["album"]["images"][2]["url"],
-          item["artists"],
-          item["id"],
-          item["duration_ms"]
+          item.name,
+          item.album.images[2].url,
+          item.artists,
+          item.id,
+          item.duration_ms
         ).template();
       };
     case "playlists":
       return (item) => {
         return new Card(
-          item["name"],
-          item["images"][0]["url"],
-          item["owner"]["display_name"],
-          item["id"]
+          item.name,
+          item.images[0].url,
+          item.owner.display_name,
+          item.id
         ).template();
       };
     default:

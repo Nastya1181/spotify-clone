@@ -24,8 +24,8 @@ class Card {
     let artistsStr = "";
     artistsArr.forEach((artist) =>
       artistsStr.length === 0
-        ? (artistsStr += artist["name"])
-        : (artistsStr += ", " + artist["name"])
+        ? (artistsStr += artist.name)
+        : (artistsStr += ", " + artist.name)
     );
     return artistsStr;
   }

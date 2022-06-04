@@ -77,12 +77,12 @@ export async function getPlaylistTracks(
   url = `${baseUrl}v1/playlists/${playlistId}/tracks`
 ) {
   const dataCallback = async (data) => {
-    let items = Object.entries(data["items"]).map(
-      ([item, data]) => data["track"]
+    let items = Object.entries(data.items).map(
+      ([item, data]) => data.track
     );
     return {
       tracks: {
-        next: data["next"],
+        next: data.next,
         items: items,
       },
     };
