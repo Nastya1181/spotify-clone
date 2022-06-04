@@ -2,36 +2,99 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="https://open.scdn.co/cdn/images/favicon32.8e66b099.png" />
+    <link rel="stylesheet" href="index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <title>Spotify</title>
+    <script src="./script.js"  type="module"></script>
   </head>
-  <body>
+  <body class="spotify-app">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <header class="header spotify-app__header">
+      <div class="header__btns">
+        <!-- <button class="header__btn header__btn_round" id="backButton"><svg class="header__svg"><path d="M15.957 2.793a1 1 0 010 1.414L8.164 12l7.793 7.793a1 1 0 11-1.414 1.414L5.336 12l9.207-9.207a1 1 0 011.414 0z"></path></svg></button>
+        <button class="header__btn header__btn_round" id="goButton"><svg class="header__svg"><path d="M8.043 2.793a1 1 0 000 1.414L15.836 12l-7.793 7.793a1 1 0 101.414 1.414L18.664 12 9.457 2.793a1 1 0 00-1.414 0z"></path></svg></button> -->
+      </div>
+      <div class="header__btns">
+        <input class="header__search-input" type="search" placeholder="Введите название трека или плейлиста" name="search">   
+        <button class="header__btn header__btn_soft-angles" id="logButton">
+          <svg class="header__svg header__svg-account"  viewBox="0 0 18 20"><path d="M15.216 13.717L12 11.869C11.823 11.768 11.772 11.607 11.757 11.521C11.742 11.435 11.737 11.267 11.869 11.111L13.18 9.57401C14.031 8.58001 14.5 7.31101 14.5 6.00001V5.50001C14.5 3.98501 13.866 2.52301 12.761 1.48601C11.64 0.435011 10.173 -0.0879888 8.636 0.0110112C5.756 0.198011 3.501 2.68401 3.501 5.67101V6.00001C3.501 7.31101 3.97 8.58001 4.82 9.57401L6.131 11.111C6.264 11.266 6.258 11.434 6.243 11.521C6.228 11.607 6.177 11.768 5.999 11.869L2.786 13.716C1.067 14.692 0 16.526 0 18.501V20H1V18.501C1 16.885 1.874 15.385 3.283 14.584L6.498 12.736C6.886 12.513 7.152 12.132 7.228 11.691C7.304 11.251 7.182 10.802 6.891 10.462L5.579 8.92501C4.883 8.11101 4.499 7.07201 4.499 6.00001V5.67101C4.499 3.21001 6.344 1.16201 8.699 1.00901C9.961 0.928011 11.159 1.35601 12.076 2.21501C12.994 3.07601 13.5 4.24301 13.5 5.50001V6.00001C13.5 7.07201 13.117 8.11101 12.42 8.92501L11.109 10.462C10.819 10.803 10.696 11.251 10.772 11.691C10.849 12.132 11.115 12.513 11.503 12.736L14.721 14.585C16.127 15.384 17.001 16.884 17.001 18.501V20H18.001V18.501C18 16.526 16.932 14.692 15.216 13.717Z"></path></svg>
+          <span class="header__user"></span>
+          <!-- <svg class="header__svg header__svg-triangle"  viewBox="0 -3 20 20"><path d="M14 6l-6 6-6-6h12z"></path></svg> --></button>
+      </div>
+  </header>
+  <aside class="side-menu spotify-app__side-menu ">
+    <div class="side-menu__container">
+    <a href="#"><img src="imgs/spotify-logo.svg" class="side-menu__logo" alt="logo"></a>
+    <nav class="side-menu__nav">
+      <ul class="side-menu__list">
+        <li class="side-menu__item">
+          <a href="#" class="side-menu__link link link_white" id="searchPage">
+            <svg class="side-menu__svg" width="24" height="24" viewBox="0 0 24 24">
+              <path fill="white" d="M15.356 10.558c0 2.623-2.16 4.75-4.823 4.75-2.664 0-4.824-2.127-4.824-4.75s2.16-4.75 4.824-4.75c2.664 0 4.823 2.127 4.823 4.75z"></path>
+              <path  fill="white" d="M1.126 10.558c0-5.14 4.226-9.28 9.407-9.28 5.18 0 9.407 4.14 9.407 9.28a9.157 9.157 0 01-2.077 5.816l4.344 4.344a1 1 0 01-1.414 1.414l-4.353-4.353a9.454 9.454 0 01-5.907 2.058c-5.18 0-9.407-4.14-9.407-9.28zm9.407-7.28c-4.105 0-7.407 3.274-7.407 7.28s3.302 7.279 7.407 7.279 7.407-3.273 7.407-7.28c0-4.005-3.302-7.278-7.407-7.278z"></path>
+            </svg>
+            <div class="side-menu__link-text">Поиск</div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <ul class="side-menu__list recent-playlists">
+    </ul>
+      <a class="side-menu__link  side-menu__link_last-link link" href="./imgs/download.svg" download><svg class="side-menu__svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zM1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12z"></path><path d="M12 6.05a1 1 0 011 1v7.486l1.793-1.793a1 1 0 111.414 1.414L12 18.364l-4.207-4.207a1 1 0 111.414-1.414L11 14.536V7.05a1 1 0 011-1z"></path></svg><span>Установить приложение</span></a>
+  </div> 
+  </aside>
+  <main class="main">
+    <div class="main__wrapper">
+      <section class="tracks-list main__tracks-list">
+      <h2 class="title">Треки</h2>
+      <a class="all-link tracks-list__all-link all-link_hidden" id="tracksAll" href="#">все</a> 
+      <div class="tracks-list__tracks-container" id="tracksContainer">
+        <div class="filler">Начните поиск</div>
+      </div>
+      </section>
+      <section class="cards-box">
+        <div class="cards-box__container">
+          <h2 class="cards-box__title title">Плейлисты</h2>
+          <a class="all-link cards-box__all-link all-link_hidden" id="playlistsAll" href="#">все</a> 
+          <!-- 
+          при клике на ссылку "все" - переход на новую страницу (точно такая же, только на ней будет всего одна конкретная коллекция плейлистов уже без обрезания (код коллекции плейлистов можно посмотреть в примере выше)) -->
+          <div class="cards-box__cards-container" id="playlistsContainer">
+            <div class="filler">Начните поиск</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer spotify-app__footer">
+      <div class="footer__track">
+        <div class="track-main-attrs">
+          <img class="track-main-attrs__cover" src="imgs/current-song.jfif" alt="song cover">
+          <div class="track-main-attrs__labels">
+            <a href="#" class="track-main-attrs__name link link_white ">Unstoppable</a><br>
+            <a href="#" class="track-main-attrs__artists link">Sia</a>
+          </div>
+        </div>
+        <div class="footer__svgs-box">
+          <svg class="footer__svg footer__svg_green" height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M15.724 4.22A4.313 4.313 0 0012.192.814a4.269 4.269 0 00-3.622 1.13.837.837 0 01-1.14 0 4.272 4.272 0 00-6.21 5.855l5.916 7.05a1.128 1.128 0 001.727 0l5.916-7.05a4.228 4.228 0 00.945-3.577z"></path></svg>
+          <svg class="footer__svg" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" fill-rule="evenodd"><path d="M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" fill-rule="nonzero"></path><path d="M10 8h4v3h-4z"></path></g></svg>
+        </div>
+      </div>
+      <div class="footer__audio-controls">
+        <audio class="footer__audio" controls>
+          <source class="footer__audio-src" src="check.mp3">
+        </audio>
+      </div>
+      <div class="footer__svgs-box">
+        <svg class="footer__svg"  height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M15 15H1v-1.5h14V15zm0-4.5H1V9h14v1.5zm-14-7A2.5 2.5 0 013.5 1h9a2.5 2.5 0 010 5h-9A2.5 2.5 0 011 3.5zm2.5-1a1 1 0 000 2h9a1 1 0 100-2h-9z"></path></svg>
+        <svg class="footer__svg"  height="16" width="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M6 2.75C6 1.784 6.784 1 7.75 1h6.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15h-6.5A1.75 1.75 0 016 13.25V2.75zm1.75-.25a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h6.5a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25h-6.5zm-6 0a.25.25 0 00-.25.25v6.5c0 .138.112.25.25.25H4V11H1.75A1.75 1.75 0 010 9.25v-6.5C0 1.784.784 1 1.75 1H4v1.5H1.75zM4 15H2v-1.5h2V15z"></path><path d="M13 10a2 2 0 11-4 0 2 2 0 014 0zm-1-5a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+      </div> 
+  </footer>
   </body>
 </html>
