@@ -4,10 +4,10 @@ const baseUrl = "https://api.spotify.com/";
 const accountsUrl = "https://accounts.spotify.com/";
 
 /** Ошибка 401. Для получения запрашиваемого ответа нужна аутентификация. */
-const unauthorized = "401";
+const unauthorized = 401;
 
 /** Ошибка 400. Cервер не понимает запрос из-за неверного синтаксиса. */
-const badRequest = "400";
+const badRequest = 400;
 
 /**
  * Метод получения init параметра fetch для GET запросов
@@ -126,11 +126,11 @@ export function switchError(errName) {
       break;
     }
     case badRequest: {
-      alert("нет того, что вы запрашиваете");
+      console.log("нет того, что вы запрашиваете");
       break;
     }
     default:
-      alert("странно, что-то не то");
+      console.log("странно, что-то не то");
       break;
   }
 }

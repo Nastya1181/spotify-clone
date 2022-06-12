@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getFeaturedPlaylists } from "../Api";
+import useFetch from "../hooks/useFetch";
 
 export default function Aside(props) {
-  const [featuredPlaylists, setfeaturedPlaylists] = useState();
-  useEffect(() => {
-    if (localStorage.getItem("access_token") !== null) {
-      getFeaturedPlaylists().then((data) => {
-        let items = data["playlists"]["items"].map((item) => {
-          return (
-            <li className="side-menu__item" key={item["id"]}>
-              <Link
-                to={`playlist/${item["id"]}`}
-                className="side-menu__link link recent-playlists__link"
-                id={item["id"]}
-              >
-                {item["name"]}
-              </Link>
-            </li>
-          );
-        });
-        setfeaturedPlaylists(items);
-      });
-    }
-  }, []);
+  const { data, loading } = useFetch(
+    "https://api.spotify.com/v1/browse/featured-playlists"
+  );
 
+  function dataHandler() {
+    return (
+      data &&
+      data["playlists"]["items"].map((item) => {
+        return (
+          <li className="side-menu__item" key={item["id"]}>
+            <Link
+              to={`playlist/${item["id"]}`}
+              className="side-menu__link link recent-playlists__link"
+              id={item["id"]}
+            >
+              {item["name"]}
+            </Link>
+          </li>
+        );
+      })
+    );
+  }
   return (
     <aside className="side-menu spotify-app__side-menu ">
       <div className="side-menu__container">
@@ -64,7 +63,8 @@ export default function Aside(props) {
           </ul>
         </nav>
         <ul className="side-menu__list recent-playlists">
-          {featuredPlaylists}
+          {data && dataHandler()}
+          {loading && <>loading...</>}
         </ul>
         <a
           className="side-menu__link  side-menu__link_last-link link"

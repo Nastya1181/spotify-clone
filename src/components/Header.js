@@ -17,7 +17,6 @@ export default function Header(props) {
     let m = location.pathname !== "/" ? "header__search-input_hidden" : "";
     setInputModificator(m);
   }, [location]);
-  console.log(InputModificator);
 
   const logButtonClickCallback = async () => {
     if (localStorage.getItem("access_token") == null) {
@@ -27,6 +26,7 @@ export default function Header(props) {
       localStorage.removeItem("access_token");
       setLogStatus("войти");
     }
+    window.location.reload(); // TODO: <мне> <кбрать перезагрузку, так как перезагружаю, чтобы не думать над состоянием подборки в Aside>
   };
 
   const inputCallback = (event) => {

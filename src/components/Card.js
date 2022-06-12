@@ -17,7 +17,7 @@ export default function Card(props) {
 
   return (
     <div className="card" id={props.id}>
-      <Link to={`/playlist/${props.id}`}>
+      <Link key={props.id} to={`/playlist/${props.id}`}>
         <img className="card__img" src={props.imgUrl} alt="card img" />
       </Link>
       <div className="card__title">{props.name}</div>

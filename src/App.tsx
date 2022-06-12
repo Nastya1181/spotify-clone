@@ -1,53 +1,25 @@
 import { useState } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Layout from './components/Layout';
-import { search } from './Api';
-import TracksSection from './components/TracksSection';
-import useSearchQuery from './hooks/useSearchQuery';
-import CardsSection from './components/CardsSection';
-import PlaylistTracks from './components/PlaylistTracks';
+import PlaylistTracksPage from './components/PlaylistTracks';
+import SearchPage from './components/SearchPage';
+import SearchItemsAllPage from './components/SearchItemsAllPage';
+import useFetch from './hooks/useFetch';
 
-
+//Todo: <мне> <Пересмотреть композицию элементов/узнать другой способ избегания антипаттерна Props Spreading>
+//Todo: <мне> <Избавиться от отправки лишних запросов при загрузке страницы>
 function App() {
     const [searchQ, setSearchQ] = useState('');
-    const [tracksData, cardsData] = useSearchQuery(searchQ);
-
+    const {data:searchData, loading} = useFetch(`https://api.spotify.com/v1/search?q=${searchQ}&type=track,playlist&include_external=audio`);
 
     return (
-        <Router>
+        <Router >
             <Routes>
-                <Route path='/' element={<Layout searchQ={searchQ} setSearchQ={setSearchQ} />}> {/* tracksData={tracksData} setTracksData={setTracksData} */}
-                    <Route index element={<><TracksSection
-                        data={tracksData}
-                        mode='clear'
-                        title='Треки'
-                        itemsType="tracks"
-                        updateFunc={search}
-                        isObserved={false} />
-                        <CardsSection
-                            data={cardsData}
-                            mode='clear'
-                            title='Плейлисты'
-                            itemsType="playlists"
-                            updateFunc={search}
-                            isObserved={false} /></>} />
-                    <Route path='tracksAll' element={
-                        (<TracksSection
-                            data={tracksData}
-                            mode='update'
-                            itemsType="tracks"
-                            title='Треки'
-                            updateFunc={search}
-                            isObserved={true} />)
-                    } />
-                    <Route path='playlistsAll' element={<CardsSection
-                        data={cardsData}
-                        mode='update'
-                        title='Плейлисты'
-                        itemsType="playlists"
-                        updateFunc={search}
-                        isObserved={true} />} />
-                    <Route path='playlist/:id' element={<PlaylistTracks />} />
+                <Route path='/' element={<Layout searchQ={searchQ} setSearchQ={setSearchQ} />}>
+                    <Route index element={<SearchPage data={searchData} searchQ={searchQ} loading={loading} />} />
+                    <Route path='tracksAll' element={<SearchItemsAllPage data={searchData} searchQ={searchQ} title='Треки' itemsType='tracks' containerType='tracks'/>} />
+                    <Route path='playlistsAll' element={<SearchItemsAllPage data={searchData} searchQ={searchQ} title='Плейлисты' itemsType='playlists' containerType='cards'/>} /> 
+                    <Route  path='playlist/:id' element={<PlaylistTracksPage  title='Плейлист' itemsType='tracks' containerType='tracks' />}/>
                 </Route>
             </Routes>
         </Router>

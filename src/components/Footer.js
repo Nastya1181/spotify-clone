@@ -1,4 +1,4 @@
-export default function Footer(props) {
+export default function Footer(props) { //Todo: <мне> <Добавить добавление футера по клику по треку>
   return (
     <footer className="footer spotify-app__footer">
       <div className="footer__track">
@@ -9,11 +9,11 @@ export default function Footer(props) {
             alt="song cover"
           />
           <div className="track-main-attrs__labels">
-            <a href="#" className="track-main-attrs__name link link_white ">
+            <a href="/" className="track-main-attrs__name link link_white ">
               Unstoppable
             </a>
             <br />
-            <a href="#" className="track-main-attrs__artists link">
+            <a href="/" className="track-main-attrs__artists link">
               Sia
             </a>
           </div>

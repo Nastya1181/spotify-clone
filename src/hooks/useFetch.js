@@ -1,61 +1,45 @@
-/* import { useEffect, useState } from "react";
-import { setEnvironmentData } from "worker_threads";
+import { useState, useEffect } from "react";
+import { switchError } from "../Api";
 
-function useFetch(url, fetchOptions, dataCallback) {
+export default function useFetch(startUrl, itemsType) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState (false);
-  const [error, setError] = useState (false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    handleFetch(startUrl);
+    return () => {
+      setData(null);
+    };
+  }, [startUrl]);
 
-  async function handleFetch(url, fetchOptions, dataCallback) {
-      setIsError (false);
-      setIsLoading (true);
-  try {
-    let response = await fetch(url, fetchOptions);
-    if (!response.ok) {
-      throw new Error(response.status);
+  function handleFetch(url) {
+    if (localStorage.getItem("access_token")) {
+      setLoading(true);
+      fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+        method: "GET",
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(res);
+        })
+        .then((data) => {
+          setData(data);
+        })
+        .catch((err) => {
+          setError(err);
+          switchError(err.status);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-    let dataJson = await response.json();
-    result = dataCallback(dataJson);
-    setItems([...items, ...result]);
-  } catch (err) {
-      setIsError (true);
-    switchError(err.message); 
   }
-  setIsLoading (false);
+  return { data, loading, error, refetch: handleFetch};
 }
-useEffect(() => {
-  handleFetch();
-}, []);
-return {items, loading, error};
-} */
-/* function useGetItemsQuery(url, fetchOptions, dataCallback) {
-    const [items, setItems] = useState([]);
-    const [next, setNext] = useState('');
-    const [loading, setLoading] = useState (false);
-    const [error, setError] = useState (false);
-
-
-    async function handleFetch(url, fetchOptions, dataCallback) {
-        setIsError (false);
-        setIsLoading (true);
-    try {
-      let response = await fetch(url, fetchOptions);
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      let dataJson = await response.json();
-      result = dataCallback(dataJson);
-      setItems([...items, ...result]);
-    } catch (err) {
-        setIsError (true);
-      switchError(err.message); 
-    }
-    setIsLoading (false);
-}
-useEffect(() => {
-    handleFetch();
-}, []);
-return {items, loading, error};
-  } */
-  
