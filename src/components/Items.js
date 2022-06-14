@@ -1,5 +1,6 @@
 import Track from "./Track";
 import Card from "./Card";
+import { useMemo } from "react";
 export default function Items(props) { //Todo: <мне> <добавить компоненты tracksContainer и cardsContainer (тогда можно избавиться от switch, храня колбеки в них)>
   function switchItemsType(type) {
     switch (type) {
@@ -26,11 +27,11 @@ export default function Items(props) { //Todo: <мне> <добавить ком
   function createCard(item) {
     return (
       <Card
-        key={item["id"]}
-        name={item["name"]}
-        imgUrl={item["images"][0]["url"]}
-        artists={item["owner"]["display_name"]}
-        id={item["id"]}
+        key={item.id}
+        name={item.name}
+        imgUrl={item.images[0].url}
+        artists={item.owner.display_name}
+        id={item.id}
       />
     );
   }

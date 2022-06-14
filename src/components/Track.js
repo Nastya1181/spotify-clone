@@ -1,29 +1,20 @@
 export default function Track(props) {
-  const getArtists = (artistsArr) => {
-    let artistsStr = "";
-    artistsArr.forEach((artist) =>
-      artistsStr.length === 0
-        ? (artistsStr += artist["name"])
-        : (artistsStr += ", " + artist["name"])
-    );
-    return artistsStr;
-  };
+  const artists =
+  typeof props.artists === "string"
+    ? props.artists
+    : props.artists.map((artist) => artist.name).join(', ');
 
-  const getMinutesDuration = (ms) => {
-    let seconds = ms * 0.001;
-    let minutes = Math.floor(seconds / 60);
+  const minutesDuration = getMinutesDuration(props.minutesDuration);
+
+  function getMinutesDuration (ms) {
+    const seconds = ms * 0.001;
+    const minutes = Math.floor(seconds / 60);
     let secondsRemainder = Math.ceil(seconds % 60);
     if (secondsRemainder < 10 && secondsRemainder) {
       secondsRemainder = "0" + secondsRemainder;
     }
     return `${minutes}:${secondsRemainder}`;
   };
-
-  let artists;
-  let minutesDuration = getMinutesDuration(props.minutesDuration);
-  typeof props.artists === "string"
-    ? (artists = props.artists)
-    : (artists = getArtists(props.artists));
 
   return (
     <div className="tracks-container__track" id={props.id}>

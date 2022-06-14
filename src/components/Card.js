@@ -3,17 +3,7 @@ export default function Card(props) {
   const artists =
     typeof props.artists === "string"
       ? props.artists
-      : getArtists(props.artists); //interface isearchitem
-
-  function getArtists(artistsArr) {
-    let artistsStr = "";
-    artistsArr.forEach((artist) =>
-      artistsStr.length === 0
-        ? (artistsStr += artist.name)
-        : (artistsStr += ", " + artist.name)
-    );
-    return artistsStr;
-  }
+      : props.artists.join(', '); 
 
   return (
     <div className="card" id={props.id}>

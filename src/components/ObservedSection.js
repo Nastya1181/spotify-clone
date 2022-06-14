@@ -1,9 +1,10 @@
+import { useMemo } from "react";
 import Items from "./Items";
 import ItemsCategorySection from "./ItemsCategorySection";
 import ItemsContainer from "./ItemsContainer";
 
 export default function ObservedSection(props) {
-  function ContentHandler(itemsType) {
+  function ContentHandler() {
     let content;
     if (props.items) {
       content = (
@@ -21,7 +22,7 @@ export default function ObservedSection(props) {
   return (
     <ItemsCategorySection title={`${props.title}`}>
       <ItemsContainer isAllMode={true} containerType={props.containerType}>
-        {ContentHandler(props.itemsType)}
+        {ContentHandler()}
       </ItemsContainer>
     </ItemsCategorySection>
   );

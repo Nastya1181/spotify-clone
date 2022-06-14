@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as Api from "../Api.js";
 
 export default function Header(props) {
   const location = useLocation();
-  const [logStatus, setLogStatus] = useState("");
-  const [InputModificator, setInputModificator] = useState("");
+  const [logStatus, setLogStatus] = useState(() => {
+    return localStorage.getItem("access_token") === null ? 'войти' : 'выйти';
+});
+  const memoizedModificator = useMemo(() => location.pathname !== "/" ? "header__search-input_hidden" : "", [location]);
 
-  useEffect(() => {
-    if (localStorage.getItem("access_token") == null) {
-      setLogStatus("войти");
-    } else setLogStatus("выйти");
-  }, []);
-
-  useEffect(() => {
-    let m = location.pathname !== "/" ? "header__search-input_hidden" : "";
-    setInputModificator(m);
-  }, [location]);
 
   const logButtonClickCallback = async () => {
-    if (localStorage.getItem("access_token") == null) {
+    if (localStorage.getItem("access_token") === null) {
       await Api.requestAuthorize();
       setLogStatus("выйти");
     } else {
@@ -40,7 +32,7 @@ export default function Header(props) {
       <div className="header__btns">
         <input
           value={props.searchQ}
-          className={`header__search-input ${InputModificator}`}
+          className={`header__search-input ${memoizedModificator}`}
           type="search"
           placeholder="Введите название трека или плейлиста"
           name="search"

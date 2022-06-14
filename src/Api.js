@@ -118,7 +118,7 @@ async function handleFetch(url, fetchOptions, dataCallback) {
 export function switchError(errName) {
   switch (errName) {
     case unauthorized: {
-      if (localStorage["access_token"] == null) {
+      if (localStorage["access_token"] === null) {
         alert("Прежде чем начать использование сервиса, залогиньтесь");
       } else {
         requestAuthorize();

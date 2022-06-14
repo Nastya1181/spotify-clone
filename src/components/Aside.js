@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
@@ -5,19 +6,19 @@ export default function Aside(props) {
   const { data, loading } = useFetch(
     "https://api.spotify.com/v1/browse/featured-playlists"
   );
+  const memoizedItems = useMemo(() => createItems(data), [data]);
 
-  function dataHandler() {
+  function createItems(data) {
     return (
-      data &&
-      data["playlists"]["items"].map((item) => {
+     data?.playlists.items.map((item) => {
         return (
-          <li className="side-menu__item" key={item["id"]}>
+          <li className="side-menu__item" key={item.id}>
             <Link
-              to={`playlist/${item["id"]}`}
+              to={`playlist/${item.id}`}
               className="side-menu__link link recent-playlists__link"
-              id={item["id"]}
+              id={item.id}
             >
-              {item["name"]}
+              {item.name}
             </Link>
           </li>
         );
@@ -63,7 +64,7 @@ export default function Aside(props) {
           </ul>
         </nav>
         <ul className="side-menu__list recent-playlists">
-          {data && dataHandler()}
+          {memoizedItems}
           {loading && <>loading...</>}
         </ul>
         <a
