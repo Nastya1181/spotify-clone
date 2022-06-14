@@ -1,5 +1,5 @@
 import useFetch from "../hooks/useFetch";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useObserverRefetch from "../hooks/useObserverRefetch";
 import ObservedSection from "./ObservedSection";
@@ -13,11 +13,6 @@ export default function PlaylistTracksPage(props) {
   const ref = useObserverRefetch(data?.next, loading, refetch);
 
   useEffect(() => {
-    setCurrItems(null);
-  }, [id]);
-
-
-  useEffect(() => {
     if (data) {
       const items = Object.entries(data.items).map(([item, data]) => data.track);
       setCurrItems((currItems) =>
@@ -25,6 +20,12 @@ export default function PlaylistTracksPage(props) {
       );
     }
   }, [data]);
+
+  useEffect(() => {
+    return () =>  setCurrItems(null);
+  }, [id]);
+
+
   return (
     <ObservedSection
       title="Плейлист"

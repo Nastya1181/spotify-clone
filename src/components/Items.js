@@ -1,6 +1,5 @@
 import Track from "./Track";
 import Card from "./Card";
-import { useMemo } from "react";
 export default function Items(props) { //Todo: <мне> <добавить компоненты tracksContainer и cardsContainer (тогда можно избавиться от switch, храня колбеки в них)>
   function switchItemsType(type) {
     switch (type) {
